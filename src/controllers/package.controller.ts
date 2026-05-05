@@ -28,9 +28,17 @@ export const getPackages = asyncHandler(async (req: Request, res: Response) => {
   // Filter by Max Price
   const priceFilter = req.query.maxPrice ? { price: { $lte: Number(req.query.maxPrice) } } : {};
 
+  let sortOption: any = {};
+  if (req.query.sort === 'rating') {
+    sortOption = { rating: -1, numReviews: -1 };
+  } else {
+    sortOption = { createdAt: -1 };
+  }
+
   const count = await Package.countDocuments({ ...keyword, ...categoryFilter, ...destinationFilter, ...priceFilter });
   const packages = await Package.find({ ...keyword, ...categoryFilter, ...destinationFilter, ...priceFilter })
     .populate('destination', 'name country')
+    .sort(sortOption)
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
@@ -78,16 +86,9 @@ export const createPackage = asyncHandler(async (req: Request, res: Response) =>
 // @access  Private/Admin
 export const updatePackage = asyncHandler(async (req: Request, res: Response) => {
   const {
-    title,
-    destination,
-    description,
-    price,
-    duration,
-    images,
-    category,
-    inclusions,
-    exclusions,
-    isPopular,
+    title, destination, description, price, duration, images,
+    category, inclusions, exclusions, isPopular,
+    maxGuests, isAvailable, host, cancellationPolicy, coordinates, faqs,
   } = req.body;
 
   const pkg = await Package.findById(req.params.id);
@@ -102,7 +103,13 @@ export const updatePackage = asyncHandler(async (req: Request, res: Response) =>
     pkg.category = category || pkg.category;
     pkg.inclusions = inclusions || pkg.inclusions;
     pkg.exclusions = exclusions || pkg.exclusions;
-    if (isPopular !== undefined) pkg.isPopular = isPopular;
+    if (isPopular !== undefined) (pkg as any).isPopular = isPopular;
+    if (maxGuests !== undefined) (pkg as any).maxGuests = maxGuests;
+    if (isAvailable !== undefined) (pkg as any).isAvailable = isAvailable;
+    if (host) (pkg as any).host = { ...(pkg as any).host, ...host };
+    if (cancellationPolicy) (pkg as any).cancellationPolicy = cancellationPolicy;
+    if (coordinates) (pkg as any).coordinates = coordinates;
+    if (faqs) (pkg as any).faqs = faqs;
 
     const updatedPackage = await pkg.save();
     res.json(updatedPackage);

@@ -72,6 +72,37 @@ const packageSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // Availability
+    maxGuests: { type: Number, default: 20 },
+    bookedSlots: { type: Number, default: 0 },
+    isAvailable: { type: Boolean, default: true },
+    // Host / Tour operator
+    host: {
+      name: { type: String, default: 'TravelAI Tours' },
+      avatar: { type: String, default: '' },
+      bio: { type: String, default: '' },
+      responseRate: { type: Number, default: 98 },
+      totalTours: { type: Number, default: 0 },
+      joinedYear: { type: Number, default: 2021 },
+    },
+    // Cancellation policy
+    cancellationPolicy: {
+      type: String,
+      enum: ['flexible', 'moderate', 'strict'],
+      default: 'moderate',
+    },
+    // Location coordinates for map
+    coordinates: {
+      lat: { type: Number },
+      lng: { type: Number },
+    },
+    // FAQ
+    faqs: [
+      {
+        question: { type: String },
+        answer: { type: String },
+      },
+    ],
   },
   {
     timestamps: true,
