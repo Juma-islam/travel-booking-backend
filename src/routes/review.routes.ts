@@ -6,8 +6,8 @@ import {
   deleteReview,
   getAllReviews,
   updateReviewStatus,
-} from '../controllers/review.controller.ts';
-import { protect, admin } from '../middlewares/auth.middleware.ts';
+} from '../controllers/review.controller';
+import { protect, admin } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 

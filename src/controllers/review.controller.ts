@@ -1,8 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import Review from '../models/review.model.ts';
-import Package from '../models/package.model.ts';
-import Notification from '../models/notification.model.ts';
+import Review from '../models/review.model';
+import Package from '../models/package.model';
+import Notification from '../models/notification.model';
 
 // @desc    Get my reviews
 // @route   GET /api/reviews/mine

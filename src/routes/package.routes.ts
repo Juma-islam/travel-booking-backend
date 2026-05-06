@@ -5,8 +5,8 @@ import {
   createPackage,
   updatePackage,
   deletePackage,
-} from '../controllers/package.controller.ts';
-import { protect, admin } from '../middlewares/auth.middleware.ts';
+} from '../controllers/package.controller';
+import { protect, admin } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 

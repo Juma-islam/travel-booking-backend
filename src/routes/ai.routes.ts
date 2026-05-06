@@ -5,7 +5,7 @@ import {
   estimateBudget,
   summarizeReviews,
   chatWithAssistant,
-} from '../controllers/ai.controller.ts';
+} from '../controllers/ai.controller';
 
 const router = express.Router();
 

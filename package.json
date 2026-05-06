@@ -19,7 +19,8 @@
     "express": "^5.2.1",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.6.0"
+    "mongoose": "^9.6.0",
+    "stripe": "^22.1.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

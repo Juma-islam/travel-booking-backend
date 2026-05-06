@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import Destination from '../models/destination.model.ts';
+import Destination from '../models/destination.model';
 
 // @desc    Fetch all destinations
 // @route   GET /api/destinations

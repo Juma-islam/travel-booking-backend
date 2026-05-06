@@ -1,8 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import User from '../models/user.model.ts';
-import Booking from '../models/booking.model.ts';
-import Package from '../models/package.model.ts';
+import User from '../models/user.model';
+import Booking from '../models/booking.model';
+import Package from '../models/package.model';
 
 // @desc    Get dashboard statistics
 // @route   GET /api/admin/stats

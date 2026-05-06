@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import { generateText } from '../services/gemini.service.ts';
+import { generateText } from '../services/gemini.service';
 
 // @desc    Get AI Travel Recommendations
 // @route   POST /api/ai/recommendations
@@ -18,7 +18,7 @@ export const getRecommendations = asyncHandler(async (req: Request, res: Respons
   - Travel Type: ${travelType}
   - Season: ${season}
   - Location Preference: ${locationPreference}
-  Provide a brief description of why each destination fits the criteria and a rough cost estimate. Please format the output as JSON.`;
+  Provide a brief description of why each destination fits the criteria and a rough cost estimate. Please format the output beautifully in Markdown using headings and bullet points. Do NOT output JSON.`;
 
   try {
     const aiResponse = await generateText(prompt);
@@ -43,7 +43,7 @@ export const generateItinerary = asyncHandler(async (req: Request, res: Response
 
   const prompt = `Create a detailed ${days}-day travel itinerary for ${destination}. 
   The traveler's interests are: ${interests}. 
-  Include day-wise schedules, nearby places, and food recommendations. Format the output in Markdown.`;
+  Include day-wise schedules, nearby places, and food recommendations. Format the output beautifully in Markdown.`;
 
   try {
     const aiResponse = await generateText(prompt);
@@ -68,7 +68,7 @@ export const estimateBudget = asyncHandler(async (req: Request, res: Response) =
 
   const prompt = `Estimate the total trip cost for a ${days}-day trip to ${destination} with a "${travelStyle}" travel style. 
   Break down the costs into: Transport, Hotel, Food, and Activities. 
-  Provide cost-saving suggestions.`;
+  Provide cost-saving suggestions. Format the output beautifully in Markdown using tables or lists.`;
 
   try {
     const aiResponse = await generateText(prompt);
@@ -94,7 +94,7 @@ export const summarizeReviews = asyncHandler(async (req: Request, res: Response)
   const prompt = `Here are several user reviews for a travel package:
   ${reviews.map((r: string, i: number) => `Review ${i + 1}: ${r}`).join('\n')}
   
-  Please provide a summary of these reviews. Highlight the main Pros and Cons, and determine the overall sentiment (Positive, Neutral, Negative).`;
+  Please provide a summary of these reviews. Highlight the main Pros and Cons, and determine the overall sentiment (Positive, Neutral, Negative). Format the output beautifully in Markdown.`;
 
   try {
     const aiResponse = await generateText(prompt);

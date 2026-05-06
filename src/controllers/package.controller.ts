@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import Package from '../models/package.model.ts';
+import Package from '../models/package.model';
 
 // @desc    Fetch all packages with filtering and search
 // @route   GET /api/packages
@@ -12,11 +12,11 @@ export const getPackages = asyncHandler(async (req: Request, res: Response) => {
   // Keyword search
   const keyword = req.query.keyword
     ? {
-        title: {
-          $regex: req.query.keyword as string,
-          $options: 'i',
-        },
-      }
+      title: {
+        $regex: req.query.keyword as string,
+        $options: 'i',
+      },
+    }
     : {};
 
   // Filter by Category

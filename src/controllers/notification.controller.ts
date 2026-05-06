@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import Notification from '../models/notification.model.ts';
+import Notification from '../models/notification.model';
 
 // @desc    Get my notifications
 // @route   GET /api/notifications

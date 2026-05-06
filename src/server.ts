@@ -10,6 +10,7 @@ import aiRoutes from './routes/ai.routes.ts';
 import adminRoutes from './routes/admin.routes.ts';
 import reviewRoutes from './routes/review.routes.ts';
 import notificationRoutes from './routes/notification.routes.ts';
+import webhookRoutes from './routes/webhook.routes.ts';
 import { notFound, errorHandler } from './middlewares/error.middleware.ts';
 
 dotenv.config();
@@ -38,6 +39,10 @@ const corsOptions = {
 
 // Middlewares
 app.use(cors(corsOptions));
+
+// Stripe webhook — must be BEFORE express.json() (needs raw body)
+app.use('/api/webhook', webhookRoutes);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
