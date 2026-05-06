@@ -11,6 +11,7 @@ import adminRoutes from './routes/admin.routes.ts';
 import reviewRoutes from './routes/review.routes.ts';
 import notificationRoutes from './routes/notification.routes.ts';
 import webhookRoutes from './routes/webhook.routes.ts';
+import uploadRoutes from './routes/upload.routes.ts';
 import { notFound, errorHandler } from './middlewares/error.middleware.ts';
 
 dotenv.config();
@@ -61,6 +62,7 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
   res.json({ 
