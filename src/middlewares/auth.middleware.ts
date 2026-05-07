@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/user.model.ts';
+import User from '../models/user.model';
 
 // Extend express Request interface to include user
 declare global {

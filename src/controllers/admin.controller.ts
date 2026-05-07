@@ -92,8 +92,8 @@ export const updateUserRole = asyncHandler(async (req: Request, res: Response) =
   res.json({ _id: updated._id, name: updated.name, email: updated.email, role: updated.role });
 });
 
-import Review from '../models/review.model.ts';
-import AIUsage from '../models/aiUsage.model.ts';
+import Review from '../models/review.model';
+import AIUsage from '../models/aiUsage.model';
 
 // ─── Review Management ────────────────────────────────────────────────────────
 
@@ -265,7 +265,7 @@ export const getAdminSettings = asyncHandler(async (req: Request, res: Response)
 
 // ─── Broadcast Notifications ──────────────────────────────────────────────────
 
-import Notification from '../models/notification.model.ts';
+import Notification from '../models/notification.model';
 
 // @desc    Send broadcast notification to all users
 // @route   POST /api/admin/notifications/broadcast

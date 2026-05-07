@@ -1,7 +1,7 @@
 import express from 'express';
-import { uploadImage, uploadMultipleImages, deleteImage } from '../controllers/upload.controller.ts';
-import { uploadPackageImage, uploadDestinationImage, uploadAvatar } from '../config/cloudinary.ts';
-import { protect, admin } from '../middlewares/auth.middleware.ts';
+import { uploadImage, uploadMultipleImages, deleteImage } from '../controllers/upload.controller';
+import { uploadPackageImage, uploadDestinationImage, uploadAvatar } from '../config/cloudinary';
+import { protect, admin } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 

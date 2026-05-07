@@ -3,10 +3,10 @@
  * Run: npx tsx src/utils/seedData.ts
  */
 import dotenv from 'dotenv';
-import connectDB from '../config/db.ts';
-import User from '../models/user.model.ts';
-import Destination from '../models/destination.model.ts';
-import Package from '../models/package.model.ts';
+import connectDB from '../config/db';
+import User from '../models/user.model';
+import Destination from '../models/destination.model';
+import Package from '../models/package.model';
 
 dotenv.config();
 

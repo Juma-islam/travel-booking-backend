@@ -1,18 +1,18 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './config/db.ts';
-import authRoutes from './routes/auth.routes.ts';
-import destinationRoutes from './routes/destination.routes.ts';
-import packageRoutes from './routes/package.routes.ts';
-import bookingRoutes from './routes/booking.routes.ts';
-import aiRoutes from './routes/ai.routes.ts';
-import adminRoutes from './routes/admin.routes.ts';
-import reviewRoutes from './routes/review.routes.ts';
-import notificationRoutes from './routes/notification.routes.ts';
-import webhookRoutes from './routes/webhook.routes.ts';
-import uploadRoutes from './routes/upload.routes.ts';
-import { notFound, errorHandler } from './middlewares/error.middleware.ts';
+import connectDB from './config/db';
+import authRoutes from './routes/auth.routes';
+import destinationRoutes from './routes/destination.routes';
+import packageRoutes from './routes/package.routes';
+import bookingRoutes from './routes/booking.routes';
+import aiRoutes from './routes/ai.routes';
+import adminRoutes from './routes/admin.routes';
+import reviewRoutes from './routes/review.routes';
+import notificationRoutes from './routes/notification.routes';
+import webhookRoutes from './routes/webhook.routes';
+import uploadRoutes from './routes/upload.routes';
+import { notFound, errorHandler } from './middlewares/error.middleware';
 
 dotenv.config();
 
@@ -87,6 +87,6 @@ app.use(errorHandler);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`CORS enabled for: ${corsOptions.origin.join(', ')}`);
+  console.log(`CORS enabled for: ${allowedOrigins.join(', ')}`);
 });
 

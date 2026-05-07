@@ -11,8 +11,8 @@ import {
   addToWishlist,
   removeFromWishlist,
   toggleWishlist,
-} from '../controllers/auth.controller.ts';
-import { protect } from '../middlewares/auth.middleware.ts';
+} from '../controllers/auth.controller';
+import { protect } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 

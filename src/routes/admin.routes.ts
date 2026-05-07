@@ -11,8 +11,8 @@ import {
   getSystemLogs,
   getAdminSettings,
   broadcastNotification,
-} from '../controllers/admin.controller.ts';
-import { protect, admin } from '../middlewares/auth.middleware.ts';
+} from '../controllers/admin.controller';
+import { protect, admin } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 

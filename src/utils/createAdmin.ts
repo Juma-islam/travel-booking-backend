@@ -3,8 +3,8 @@
  * npx tsx src/utils/createAdmin.ts
  */
 import dotenv from 'dotenv';
-import connectDB from '../config/db.ts';
-import User from '../models/user.model.ts';
+import connectDB from '../config/db';
+import User from '../models/user.model';
 
 dotenv.config();
 

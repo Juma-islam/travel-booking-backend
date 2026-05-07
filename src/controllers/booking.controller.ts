@@ -1,8 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
-import Booking from '../models/booking.model.ts';
-import Package from '../models/package.model.ts';
-import Notification from '../models/notification.model.ts';
+import Booking from '../models/booking.model';
+import Package from '../models/package.model';
+import Notification from '../models/notification.model';
 
 // @desc    Create new booking
 // @route   POST /api/bookings

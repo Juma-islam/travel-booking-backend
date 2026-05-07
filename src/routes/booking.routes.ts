@@ -6,9 +6,9 @@ import {
   updateBookingStatus,
   getMyBookings,
   getBookings,
-} from '../controllers/booking.controller.ts';
-import { createCheckoutSession } from '../controllers/webhook.controller.ts';
-import { protect, admin } from '../middlewares/auth.middleware.ts';
+} from '../controllers/booking.controller';
+import { createCheckoutSession } from '../controllers/webhook.controller';
+import { protect, admin } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 

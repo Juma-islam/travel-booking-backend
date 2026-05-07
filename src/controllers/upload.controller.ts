@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { cloudinary } from '../config/cloudinary.ts';
+import { cloudinary } from '../config/cloudinary';
 
 // @desc    Upload single image
 // @route   POST /api/upload

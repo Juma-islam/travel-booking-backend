@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Booking from '../models/booking.model.ts';
-import Notification from '../models/notification.model.ts';
+import Booking from '../models/booking.model';
+import Notification from '../models/notification.model';
 
 // Lazy Stripe init — only when actually called, not at module load
 function getStripe() {

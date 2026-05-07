@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import AIUsage from '../models/aiUsage.model.ts';
+import AIUsage from '../models/aiUsage.model';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 
