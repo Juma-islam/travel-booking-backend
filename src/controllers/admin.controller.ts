@@ -262,3 +262,46 @@ export const getAdminSettings = asyncHandler(async (req: Request, res: Response)
     geminiEnabled: !!process.env.GEMINI_API_KEY,
   });
 });
+
+// ─── Broadcast Notifications ──────────────────────────────────────────────────
+
+import Notification from '../models/notification.model.ts';
+
+// @desc    Send broadcast notification to all users
+// @route   POST /api/admin/notifications/broadcast
+// @access  Private/Admin
+export const broadcastNotification = asyncHandler(async (req: Request, res: Response) => {
+  const { title, message, type } = req.body;
+
+  if (!title || !message) {
+    res.status(400);
+    throw new Error('Title and message are required');
+  }
+
+  const validTypes = ['booking', 'ai', 'promo', 'system', 'alert'];
+  const notifType = validTypes.includes(type) ? type : 'system';
+
+  // Get all non-admin users
+  const users = await User.find({ role: 'user' }).select('_id');
+
+  if (users.length === 0) {
+    res.json({ message: 'No users to notify', count: 0 });
+    return;
+  }
+
+  // Create notifications in bulk
+  const notifications = users.map((u: any) => ({
+    user: u._id,
+    type: notifType,
+    title,
+    message,
+    read: false,
+  }));
+
+  await Notification.insertMany(notifications);
+
+  res.status(201).json({
+    message: `Broadcast sent to ${users.length} user${users.length !== 1 ? 's' : ''}`,
+    count: users.length,
+  });
+});

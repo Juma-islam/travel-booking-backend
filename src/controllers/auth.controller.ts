@@ -217,3 +217,64 @@ export const verifyResetToken = asyncHandler(async (req: Request, res: Response)
 
   res.json({ valid: true, name: user.name });
 });
+
+// @desc    Get user wishlist
+// @route   GET /api/auth/wishlist
+// @access  Private
+export const getWishlist = asyncHandler(async (req: Request, res: Response) => {
+  const user = await User.findById(req.user._id).populate('savedTrips', 'title images price rating numReviews duration category destination');
+  if (!user) { res.status(404); throw new Error('User not found'); }
+  res.json(user.savedTrips || []);
+});
+
+// @desc    Add to wishlist
+// @route   POST /api/auth/wishlist/:packageId
+// @access  Private
+export const addToWishlist = asyncHandler(async (req: Request, res: Response) => {
+  const user = await User.findById(req.user._id);
+  if (!user) { res.status(404); throw new Error('User not found'); }
+
+  const pkgId = req.params.packageId;
+  const already = (user.savedTrips as any[]).some((id: any) => id.toString() === pkgId);
+
+  if (!already) {
+    (user.savedTrips as any[]).push(pkgId);
+    await user.save();
+  }
+
+  res.json({ message: 'Added to wishlist', saved: true, count: user.savedTrips.length });
+});
+
+// @desc    Remove from wishlist
+// @route   DELETE /api/auth/wishlist/:packageId
+// @access  Private
+export const removeFromWishlist = asyncHandler(async (req: Request, res: Response) => {
+  const user = await User.findById(req.user._id);
+  if (!user) { res.status(404); throw new Error('User not found'); }
+
+  user.savedTrips = (user.savedTrips as any[]).filter((id: any) => id.toString() !== req.params.packageId) as any;
+  await user.save();
+
+  res.json({ message: 'Removed from wishlist', saved: false, count: user.savedTrips.length });
+});
+
+// @desc    Toggle wishlist
+// @route   PUT /api/auth/wishlist/:packageId
+// @access  Private
+export const toggleWishlist = asyncHandler(async (req: Request, res: Response) => {
+  const user = await User.findById(req.user._id);
+  if (!user) { res.status(404); throw new Error('User not found'); }
+
+  const pkgId = req.params.packageId;
+  const idx = (user.savedTrips as any[]).findIndex((id: any) => id.toString() === pkgId);
+
+  if (idx === -1) {
+    (user.savedTrips as any[]).push(pkgId);
+  } else {
+    user.savedTrips = (user.savedTrips as any[]).filter((_: any, i: number) => i !== idx) as any;
+  }
+
+  await user.save();
+  const saved = (user.savedTrips as any[]).some((id: any) => id.toString() === pkgId);
+  res.json({ saved, count: user.savedTrips.length });
+});

@@ -10,6 +10,7 @@ import {
   getAIStats,
   getSystemLogs,
   getAdminSettings,
+  broadcastNotification,
 } from '../controllers/admin.controller.ts';
 import { protect, admin } from '../middlewares/auth.middleware.ts';
 
@@ -35,5 +36,8 @@ router.route('/logs').get(protect, admin, getSystemLogs);
 
 // Settings
 router.route('/settings').get(protect, admin, getAdminSettings);
+
+// Notifications
+router.route('/notifications/broadcast').post(protect, admin, broadcastNotification);
 
 export default router;
