@@ -102,7 +102,7 @@ import AIUsage from '../models/aiUsage.model';
 // @access  Private/Admin
 export const getAdminReviews = asyncHandler(async (req: Request, res: Response) => {
   const status = req.query.status as string;
-  const filter = status && status !== 'all' ? { status } : {};
+  const filter: any = status && status !== 'all' ? { status } : {};
 
   const reviews = await Review.find(filter)
     .populate('user', 'name email')

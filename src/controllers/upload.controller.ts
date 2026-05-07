@@ -42,7 +42,7 @@ export const uploadMultipleImages = (req: Request, res: Response) => {
 export const deleteImage = async (req: Request, res: Response) => {
   try {
     const { publicId } = req.params;
-    const decodedId = decodeURIComponent(publicId);
+    const decodedId = decodeURIComponent(publicId as string);
 
     await cloudinary.uploader.destroy(decodedId);
     res.json({ message: 'Image deleted successfully' });

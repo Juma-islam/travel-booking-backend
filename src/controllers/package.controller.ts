@@ -35,8 +35,8 @@ export const getPackages = asyncHandler(async (req: Request, res: Response) => {
     sortOption = { createdAt: -1 };
   }
 
-  const count = await Package.countDocuments({ ...keyword, ...categoryFilter, ...destinationFilter, ...priceFilter });
-  const packages = await Package.find({ ...keyword, ...categoryFilter, ...destinationFilter, ...priceFilter })
+  const count = await Package.countDocuments({ ...keyword, ...categoryFilter, ...destinationFilter, ...priceFilter } as any);
+  const packages = await Package.find({ ...keyword, ...categoryFilter, ...destinationFilter, ...priceFilter } as any)
     .populate('destination', 'name country')
     .sort(sortOption)
     .limit(pageSize)
