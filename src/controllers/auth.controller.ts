@@ -4,6 +4,43 @@ import crypto from 'crypto';
 import User from '../models/user.model';
 import generateToken from '../utils/generateToken';
 
+// @desc    Sync Firebase user to backend
+// @route   POST /api/auth/sync
+// @access  Public
+export const syncUser = asyncHandler(async (req: Request, res: Response) => {
+  const { email, name, firebaseUid } = req.body;
+
+  if (!email) {
+    res.status(400);
+    throw new Error('Email is required');
+  }
+
+  let user = await User.findOne({ email });
+
+  if (!user) {
+    const randomPassword = crypto.randomBytes(20).toString('hex');
+    user = await User.create({
+      name: name || email.split('@')[0],
+      email,
+      password: randomPassword,
+    });
+  }
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id.toString()),
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid user data');
+  }
+});
+
+
 // @desc    Auth user & get token
 // @route   POST /api/auth/login
 // @access  Public
