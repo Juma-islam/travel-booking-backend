@@ -1,6 +1,6 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import connectDB from './config/db';
 import authRoutes from './routes/auth.routes';
 import destinationRoutes from './routes/destination.routes';
@@ -13,8 +13,6 @@ import notificationRoutes from './routes/notification.routes';
 import webhookRoutes from './routes/webhook.routes';
 import uploadRoutes from './routes/upload.routes';
 import { notFound, errorHandler } from './middlewares/error.middleware';
-
-dotenv.config();
 
 // Connect to Database
 connectDB();

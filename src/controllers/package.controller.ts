@@ -63,18 +63,30 @@ export const getPackageById = asyncHandler(async (req: Request, res: Response) =
 // @route   POST /api/packages
 // @access  Private/Admin
 export const createPackage = asyncHandler(async (req: Request, res: Response) => {
+  const {
+    title, destination, description, price, duration, images,
+    category, inclusions, exclusions, isPopular,
+    maxGuests, isAvailable, host, cancellationPolicy, coordinates, faqs,
+  } = req.body;
+
   const pkg = new Package({
     user: req.user._id,
-    title: 'Sample Package',
-    destination: req.body.destination, // Requires a valid destination ID
-    description: 'Sample description',
-    price: 0,
-    duration: { days: 1, nights: 1 },
-    images: ['/images/sample.jpg'],
-    category: 'relaxation',
-    inclusions: ['Flight'],
-    exclusions: ['Food'],
-    isPopular: false,
+    title,
+    destination,
+    description,
+    price,
+    duration,
+    images: images || [],
+    category,
+    inclusions,
+    exclusions,
+    isPopular,
+    maxGuests,
+    isAvailable,
+    host,
+    cancellationPolicy,
+    coordinates,
+    faqs,
   });
 
   const createdPackage = await pkg.save();
