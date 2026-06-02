@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
 import Package from '../models/package.model';
+import Review from '../models/review.model';
 
 // @desc    Fetch all packages with filtering and search
 // @route   GET /api/packages
@@ -52,7 +53,19 @@ export const getPackageById = asyncHandler(async (req: Request, res: Response) =
   const pkg = await Package.findById(req.params.id).populate('destination', 'name country description');
 
   if (pkg) {
-    res.json(pkg);
+    const reviews = await Review.find({ package: pkg._id, status: 'published' })
+      .populate('user', 'name')
+      .sort({ createdAt: -1 });
+
+    const pkgObj = pkg.toObject() as any;
+    pkgObj.reviews = reviews.map((r: any) => ({
+      name: r.user?.name || 'Anonymous User',
+      rating: r.rating,
+      comment: r.comment,
+      createdAt: r.createdAt,
+    }));
+
+    res.json(pkgObj);
   } else {
     res.status(404);
     throw new Error('Package not found');

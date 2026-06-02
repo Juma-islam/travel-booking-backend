@@ -4,6 +4,20 @@ import Review from '../models/review.model';
 import Package from '../models/package.model';
 import Notification from '../models/notification.model';
 
+// Helper function to update package ratings dynamically
+const updatePackageRatings = async (packageId: string) => {
+  const reviews = await Review.find({ package: packageId, status: 'published' });
+  const numReviews = reviews.length;
+  const rating = numReviews > 0
+    ? Number((reviews.reduce((acc, item) => item.rating + acc, 0) / numReviews).toFixed(1))
+    : 0;
+
+  await Package.findByIdAndUpdate(packageId, {
+    rating,
+    numReviews,
+  });
+};
+
 // @desc    Get my reviews
 // @route   GET /api/reviews/mine
 // @access  Private
@@ -80,6 +94,7 @@ export const updateReview = asyncHandler(async (req: Request, res: Response) => 
   review.status = 'pending'; // re-review after edit
 
   const updated = await review.save();
+  await updatePackageRatings(review.package.toString());
   const populated = await updated.populate('package', 'title images destination');
   res.json(populated);
 });
@@ -100,7 +115,9 @@ export const deleteReview = asyncHandler(async (req: Request, res: Response) => 
     throw new Error('Not authorized');
   }
 
+  const packageId = review.package.toString();
   await review.deleteOne();
+  await updatePackageRatings(packageId);
   res.json({ message: 'Review deleted' });
 });
 
@@ -128,6 +145,7 @@ export const updateReviewStatus = asyncHandler(async (req: Request, res: Respons
 
   review.status = req.body.status ?? review.status;
   const updated = await review.save();
+  await updatePackageRatings(review.package.toString());
 
   // Notify user
   const userId = (review.user as any)._id || review.user;

@@ -72,42 +72,6 @@ export const getBookingById = asyncHandler(async (req: Request, res: Response) =
   }
 });
 
-// @desc    Update booking to paid (Mock)
-// @route   PUT /api/bookings/:id/pay
-// @access  Private
-export const updateBookingToPaid = asyncHandler(async (req: Request, res: Response) => {
-  const booking = await Booking.findById(req.params.id).populate('packageItem', 'title');
-
-  if (booking) {
-    booking.isPaid = true;
-    booking.paidAt = new Date();
-    booking.status = 'confirmed';
-    booking.paymentResult = {
-      id: req.body.id || 'MOCK_PAYMENT_ID_123',
-      status: req.body.status || 'COMPLETED',
-      update_time: req.body.update_time || new Date().toISOString(),
-      email_address: req.body.email_address || req.user.email,
-    };
-
-    const updatedBooking = await booking.save();
-
-    // Payment notification
-    const pkgTitle = (booking.packageItem as any)?.title || 'your package';
-    await Notification.create({
-      user: booking.user,
-      type: 'booking',
-      title: 'Payment Confirmed ✅',
-      message: `Payment of $${booking.totalPrice.toFixed(2)} received for "${pkgTitle}". Your booking is confirmed!`,
-      link: '/user/bookings',
-    });
-
-    res.json(updatedBooking);
-  } else {
-    res.status(404);
-    throw new Error('Booking not found');
-  }
-});
-
 // @desc    Update booking status (e.g. Cancel)
 // @route   PUT /api/bookings/:id/status
 // @access  Private

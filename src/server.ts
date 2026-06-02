@@ -12,6 +12,7 @@ import reviewRoutes from './routes/review.routes';
 import notificationRoutes from './routes/notification.routes';
 import webhookRoutes from './routes/webhook.routes';
 import uploadRoutes from './routes/upload.routes';
+import contactRoutes from './routes/contact.routes';
 import { notFound, errorHandler } from './middlewares/error.middleware';
 
 // Connect to Database
@@ -69,6 +70,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/contact', contactRoutes);
 
 app.get('/', (req, res) => {
   res.json({ 

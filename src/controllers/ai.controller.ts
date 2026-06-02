@@ -110,14 +110,16 @@ export const summarizeReviews = asyncHandler(async (req: Request, res: Response)
 // @route   POST /api/ai/chatbot
 // @access  Public
 export const chatWithAssistant = asyncHandler(async (req: Request, res: Response) => {
-  const { message, chatHistory } = req.body;
+  const { message, chatHistory, context } = req.body;
 
   if (!message) {
     res.status(400);
     throw new Error('Message field is required');
   }
 
-  const prompt = `You are an AI Travel Assistant for a booking platform. Be polite, helpful, and concise.
+  const prompt = context 
+    ? `${context}\nUser Query: ${message}`
+    : `You are an AI Travel Assistant for a booking platform. Be polite, helpful, and concise.
   Previous conversation:
   ${chatHistory ? chatHistory : 'None'}
   
